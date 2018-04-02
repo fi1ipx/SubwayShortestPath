@@ -8,13 +8,9 @@ package com.moscowsubway.rs;
 import com.moscowsubway.database.StationDB;
 import com.moscowsubway.impls.ObjectsListsImpl;
 import java.util.List;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import com.moscowsubway.objects.Station;
@@ -40,7 +36,6 @@ public class SubwayPath {
      * Retrieves representation of an instance of rs.SubwayPath
      * @return an instance of java.lang.String
      */
-    
     private ObjectsListsImpl searchImpl = new ObjectsListsImpl();
 
     @GET
@@ -48,11 +43,8 @@ public class SubwayPath {
     @Path("/allstations")
     public ResponseList getAllStations() {
         List<Station> cityList = searchImpl.getStations();
-        
         ResponseList responseList = new ResponseList();
-        
         responseList.setList(cityList);
-        
         return responseList;
     }
     
@@ -69,21 +61,4 @@ public class SubwayPath {
         
         return responseList;
     }
-    
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getJson() {
-//        //TODO return proper representation object
-//        //throw new UnsupportedOperationException();
-//        return "Hello!";
-//    }
-//
-//    /**
-//     * PUT method for updating or creating an instance of SubwayPath
-//     * @param content representation for the resource
-//     */
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public void putJson(String content) {
-//    }
 }

@@ -21,7 +21,6 @@ public class ResponseList {
     
     @XmlElement(name = "station")
     private List<Station> list;
-
     
     public List<Station> getList() {
         return list;
