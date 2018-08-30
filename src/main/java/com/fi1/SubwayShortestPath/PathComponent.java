@@ -1,21 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.fi1.SubwayShortestPath.objects;
+package com.fi1.SubwayShortestPath;
+
+import com.fi1.SubwayShortestPath.database.EdgeRepository;
+import com.fi1.SubwayShortestPath.database.StationRepository;
+import com.fi1.SubwayShortestPath.objects.Edge;
+import com.fi1.SubwayShortestPath.objects.Station;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-/**
- *
- * @author Fil
- */
-public class ShortestPath {
+@Component
+public class PathComponent {
+
+    private StationRepository stationRepository;
+    private EdgeRepository edgeRepository;
+
+    public List<Station> getPath(int src, int dst) {
+        List<Edge> edges = new ArrayList<>();
+        edgeRepository.findAll().forEach(edges::add);
+        int w = 1;
+        int graph[][] = new int[249][249];
+        for (int i = 0; i < edges.size(); i++) {
+            int st1, st2;
+            st1 = edges.get(i).getSrc() - 1;
+            st2 = edges.get(i).getDst() - 1;
+            graph[st1][st2] = w;
+            graph[st2][st1] = w;
+        }
+        List<Station> stations = new ArrayList<>();
+        List<Integer> st_ids = dijkstra(graph, src-1, dst-1);
+        for (int i = 0; i < st_ids.size(); i++) {
+            stationRepository.findById(st_ids.get(i)+1).ifPresent(stations::add);
+        }
+        Collections.reverse(stations);
+        stationRepository.findById(dst).ifPresent(stations::add);
+        return stations;
+    }
+
     // A utility function to find the vertex with minimum distance value,
     // from the set of vertices not yet included in shortest path tree
-    static final int V = 249;
-    int minDistance(int dist[], Boolean sptSet[]) {
+    private static final int V = 249;
+    private int minDistance(int dist[], Boolean sptSet[]) {
         // Initialize min value
         int min = Integer.MAX_VALUE, min_index=-1;
 
@@ -30,13 +57,13 @@ public class ShortestPath {
     }
 
     // A utility function to print the constructed distance array
-    ArrayList<Integer> printSolution(int dist[], int preD[], int n, int dst) {
-        System.out.println("Vertex   Distance from Source");
-        for (int i = 0; i < V; i++)
-            System.out.println(i+" tt "+dist[i]);
-        ArrayList<Integer> returnArray = new ArrayList<>();
+    private List<Integer> printSolution(int dist[], int preD[], int n, int dst) {
+//        System.out.println("Vertex   Distance from Source");
+//        for (int i = 0; i < V; i++)
+//            System.out.println(i+" tt "+dist[i]);
+        List<Integer> returnArray = new ArrayList<>();
         int j;
-        System.out.print("0000 = " + dst);
+//        System.out.print("0000 = " + dst);
         j = dst;
         do
         {
@@ -53,8 +80,7 @@ public class ShortestPath {
     // Function that implements Dijkstra's single source shortest path
     // algorithm for a graph represented using adjacency matrix
     // representation
-    public ArrayList<Integer> dijkstra(int graph[][], int src, int dst)
-    {
+    private List<Integer> dijkstra(int graph[][], int src, int dst) {
         int dist[] = new int[V]; // The output array. dist[i] will hold
         // the shortest distance from src to i
 
@@ -102,5 +128,15 @@ public class ShortestPath {
 
         // print the constructed distance array
         return printSolution(dist, preD, V, dst);
+    }
+
+    @Autowired
+    public void setStationRepository(StationRepository stationRepository) {
+        this.stationRepository = stationRepository;
+    }
+
+    @Autowired
+    public void setEdgeRepository(EdgeRepository edgeRepository) {
+        this.edgeRepository = edgeRepository;
     }
 }
