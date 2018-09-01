@@ -16,25 +16,21 @@ public class SubwayController {
 
     private SubwayService subwayService;
 
-    @CrossOrigin
     @RequestMapping("stations")
     public List<Station> getAllStations() {
         return subwayService.getAllStations();
     }
 
-    @CrossOrigin
     @RequestMapping("lines")
     public List<Line> getAllLines() {
         return subwayService.getAllLines();
     }
 
-    @CrossOrigin
     @RequestMapping("edges")
     public List<Edge> getAllEdges() {
         return subwayService.getAllEdges();
     }
 
-    @CrossOrigin
     @RequestMapping("path")
     public List<Station> getPath(@RequestParam("src") int src, @RequestParam("dst") int dst) {
         return subwayService.getPath(src, dst);
