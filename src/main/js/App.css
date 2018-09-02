@@ -1,14 +1,50 @@
 .line1 {
-  background-color: red;
+  background-color: #ef1e25;
 }
-.green {
-  background-color: green;
+.line2 {
+  background-color: #029a55;
 }
-.blue {
-  background-color: blue;
+.line3 {
+  background-color: #0252a2;
 }
-.yellow {
-  background-color: yellow;
+.line4 {
+  background-color: #019ee0;
+}
+.line5 {
+  background-color: #745c2f;
+}
+.line6 {
+   background-color: #fbaa33;
+ }
+.line7 {
+  background-color: #b61d8e;
+}
+.line8 {
+  background-color: #ffd803;
+}
+.line9 {
+  background-color: #ffd803;
+}
+.line10 {
+  background-color: #acadaf;
+}
+.line11 {
+  background-color: #37d318;
+}
+.line12 {
+  background-color: #5bbebb;
+}
+.line13 {
+  background-color: #5bbebb;
+}
+.line14 {
+  background-color: #85d4f3;
+}
+.line15 {
+  background-color: #ef1e25;
+}
+.line16 {
+  background-color: #ffa8af;
 }
 .sphere {
   height: 10px;

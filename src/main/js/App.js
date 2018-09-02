@@ -81,21 +81,14 @@ class App extends React.Component {
                     console.log('stations fetched');
                     console.log(result);
                     var options = [];
+                    function getLineClass(lineNum) {
+                        return "sphere line" + lineNum;
+                    }
                     result.forEach(function(a){
                         var newElement = {value: a.name, id: a.id, label: a.name};
-                        // console.log(a);
-                        if (a.lineNum === 1) {
-                            newElement.label = <span><div className="sphere line1"></div> {a.name}</span>;
-                        } else if (a.lineNum === 2) {
-                            newElement.label = <span><div className="sphere green"></div> {a.name}</span>;
-                        } else if (a.lineNum === 3) {
-                            newElement.label = <span><div className="sphere blue"></div> {a.name}</span>;
-                        } else if (a.lineNum === 4) {
-                            newElement.label = <span><div className="sphere yellow"></div> {a.name}</span>;
-                        }
+                        var lineNum = a.lineNum;
+                        newElement.label = <span><div className={getLineClass(lineNum)}></div> {a.name}</span>;
                         options.push(newElement);
-                        //newElement.label = a.lineNum;
-                        //console.log(newElement);
                     });
                     this.setState({options: options});
                 },
@@ -122,9 +115,9 @@ class App extends React.Component {
             Header: 'Station name',
             accessor: 'name'
         }, {
-            id: 'Line', // Required because our accessor is not a string
+            Header: 'Line', // Required because our accessor is not a string
             accessor: 'lineNum'
-        }]
+        }];
 
         return (
             <div align="center">
