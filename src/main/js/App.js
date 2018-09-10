@@ -42,7 +42,7 @@ class App extends React.Component {
         console.log(`Option selected1:`, selectedOption1);
         console.log(`Option selected2:`, selectedOption2);
         if (selectedOption1 != null && selectedOption2 != null) {
-            var url = "http://localhost:8080/path?src=" + selectedOption1 + "&dst=" + selectedOption2;
+            var url = "/path?src=" + selectedOption1 + "&dst=" + selectedOption2;
             console.log('Getting path from ' + url);
             fetch(url)
                 .then(res => res.json())
@@ -70,7 +70,7 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        fetch('http://localhost:8080/stations')
+        fetch('/stations')
             .then(res => res.json())
             .then(
                 (result) => {
