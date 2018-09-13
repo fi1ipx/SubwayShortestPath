@@ -21,18 +21,18 @@ public class PathComponent {
         List<Edge> edges = new ArrayList<>();
         edgeRepository.findAll().forEach(edges::add);
         int w = 1;
-        int graph[][] = new int[249][249];
+        int graph[][] = new int[250][250];
         for (int i = 0; i < edges.size(); i++) {
             int st1, st2;
-            st1 = edges.get(i).getSrc() - 1;
-            st2 = edges.get(i).getDst() - 1;
+            st1 = edges.get(i).getSrc() ;
+            st2 = edges.get(i).getDst() ;
             graph[st1][st2] = w;
             graph[st2][st1] = w;
         }
         List<Station> stations = new ArrayList<>();
-        List<Integer> st_ids = dijkstra(graph, src-1, dst-1);
+        List<Integer> st_ids = dijkstra(graph, src, dst);
         for (int i = 0; i < st_ids.size(); i++) {
-            stationRepository.findById(st_ids.get(i)+1).ifPresent(stations::add);
+            stationRepository.findById(st_ids.get(i)).ifPresent(stations::add);
         }
         Collections.reverse(stations);
         stationRepository.findById(dst).ifPresent(stations::add);
@@ -41,7 +41,7 @@ public class PathComponent {
 
     // A utility function to find the vertex with minimum distance value,
     // from the set of vertices not yet included in shortest path tree
-    private static final int V = 249;
+    private static final int V = 250;
     private int minDistance(int dist[], Boolean sptSet[]) {
         // Initialize min value
         int min = Integer.MAX_VALUE, min_index=-1;
@@ -113,8 +113,7 @@ public class PathComponent {
 
             // Update dist value of the adjacent vertices of the
             // picked vertex.
-            for (int v = 0; v < V; v++)
-
+            for (int v = 0; v < V; v++) {
                 // Update dist[v] only if is not in sptSet, there is an
                 // edge from u to v, and total weight of path from src to
                 // v through u is smaller than current value of dist[v]
@@ -124,6 +123,7 @@ public class PathComponent {
                     dist[v] = dist[u] + graph[u][v];
                     preD[v] = u;
                 }
+            }
         }
 
         // print the constructed distance array

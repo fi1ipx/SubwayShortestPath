@@ -37,5 +37,5 @@
 **/.classpath
 **/node_modules/
 node_modules/
-src/main/resources/static/
+src/main/resources/static/bundle.js
 package-lock.json

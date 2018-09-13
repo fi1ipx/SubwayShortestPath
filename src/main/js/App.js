@@ -54,7 +54,14 @@ class App extends React.Component {
                         });
                         console.log('Path fetched');
                         console.log(result);
-                        //this.setState({pathData: pathData});
+                        function getLineClass(lineNum) {
+                            return "sphere line" + lineNum;
+                        }
+                        result.forEach(function(a){
+                            var lineNum = a.lineNum;
+                            a.name = <span><div className={getLineClass(lineNum)}></div> {a.name}</span>;
+                        });
+                        this.setState({pathData: result});
                     },
                     // Note: it's important to handle errors here
                     // instead of a catch() block so that we don't swallow
@@ -110,13 +117,25 @@ class App extends React.Component {
 
         const columns = [{
             Header: 'Station id',
-            accessor: 'id' // String-based value accessors!
+            accessor: 'id', // String-based value accessors!
+            sortable: false, // use table default
+            resizable: false, // use table default
+            filterable: false, // use table default
+            show: true
         }, {
             Header: 'Station name',
-            accessor: 'name'
+            accessor: 'name',
+            sortable: false, // use table default
+            resizable: false, // use table default
+            filterable: false, // use table default
+            show: true
         }, {
             Header: 'Line', // Required because our accessor is not a string
-            accessor: 'lineNum'
+            accessor: 'lineNum',
+            sortable: false, // use table default
+            resizable: false, // use table default
+            filterable: false, // use table default
+            show: true
         }];
 
         return (
@@ -142,6 +161,8 @@ class App extends React.Component {
                     <ReactTable
                         data={pathData}
                         columns={columns}
+                        defaultPageSize={100}
+                        minRows={3}
                     />
                 </div>
             </div>
