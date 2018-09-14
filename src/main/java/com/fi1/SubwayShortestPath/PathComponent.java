@@ -4,6 +4,8 @@ import com.fi1.SubwayShortestPath.database.EdgeRepository;
 import com.fi1.SubwayShortestPath.database.StationRepository;
 import com.fi1.SubwayShortestPath.objects.Edge;
 import com.fi1.SubwayShortestPath.objects.Station;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ public class PathComponent {
 
     private StationRepository stationRepository;
     private EdgeRepository edgeRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PathComponent.class);
 
     public List<Station> getPath(int src, int dst) {
         List<Edge> edges = new ArrayList<>();
@@ -36,6 +39,7 @@ public class PathComponent {
         }
         Collections.reverse(stations);
         stationRepository.findById(dst).ifPresent(stations::add);
+        LOGGER.info("Path between {} and {} calculated: {}", src, dst, stations);
         return stations;
     }
 

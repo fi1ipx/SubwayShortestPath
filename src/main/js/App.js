@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import 'react-table/react-table.css';
 
@@ -22,7 +22,7 @@ class App extends React.Component {
     }
 
     handleChange1 = (selectedOption1) => {
-        this.setState({ selectedOption1 });
+        this.setState({selectedOption1});
         console.log(`Option selected1:`, selectedOption1);
         console.log(`Option selected2:`, this.state.selectedOption2);
         if (selectedOption1 != null && this.state.selectedOption2 != null) {
@@ -30,7 +30,7 @@ class App extends React.Component {
         }
     }
     handleChange2 = (selectedOption2) => {
-        this.setState({ selectedOption2 });
+        this.setState({selectedOption2});
         console.log(`Option selected1:`, this.state.selectedOption1);
         console.log(`Option selected2:`, selectedOption2);
         if (this.state.selectedOption1 != null && selectedOption2 != null) {
@@ -54,12 +54,15 @@ class App extends React.Component {
                         });
                         console.log('Path fetched');
                         console.log(result);
+
                         function getLineClass(lineNum) {
                             return "sphere line" + lineNum;
                         }
-                        result.forEach(function(a){
+
+                        result.forEach(function (a) {
                             var lineNum = a.lineNum;
-                            a.name = <span><div className={getLineClass(lineNum)}></div> {a.name}</span>;
+                            a.name = <span><div className={getLineClass(lineNum)}></div>
+                                {a.name}</span>;
                         });
                         this.setState({pathData: result});
                     },
@@ -88,13 +91,16 @@ class App extends React.Component {
                     console.log('stations fetched');
                     console.log(result);
                     var options = [];
+
                     function getLineClass(lineNum) {
                         return "sphere line" + lineNum;
                     }
-                    result.forEach(function(a){
+
+                    result.forEach(function (a) {
                         var newElement = {value: a.name, id: a.id, label: a.name};
                         var lineNum = a.lineNum;
-                        newElement.label = <span><div className={getLineClass(lineNum)}></div> {a.name}</span>;
+                        newElement.label = <span><div className={getLineClass(lineNum)}></div>
+                            {a.name}</span>;
                         options.push(newElement);
                     });
                     this.setState({options: options});
@@ -112,8 +118,10 @@ class App extends React.Component {
     }
 
     render() {
-        const { selectedOption1, selectedOption2, isLoaded,
-            error, options ,pathIsLoaded, pathError, pathData } = this.state
+        const {
+            selectedOption1, selectedOption2, isLoaded,
+            error, options, pathIsLoaded, pathError, pathData
+        } = this.state
 
         const columns = [{
             Header: 'Station id',
@@ -121,21 +129,24 @@ class App extends React.Component {
             sortable: false, // use table default
             resizable: false, // use table default
             filterable: false, // use table default
-            show: true
+            show: false
         }, {
             Header: 'Station name',
             accessor: 'name',
             sortable: false, // use table default
             resizable: false, // use table default
             filterable: false, // use table default
-            show: true
+            show: true,
+            style: {
+                textAlign: "left"
+            }
         }, {
             Header: 'Line', // Required because our accessor is not a string
             accessor: 'lineNum',
             sortable: false, // use table default
             resizable: false, // use table default
             filterable: false, // use table default
-            show: true
+            show: false
         }];
 
         return (
@@ -148,7 +159,8 @@ class App extends React.Component {
                         options={options}
                     />
                 </div>
-                <div id="middlediv" dangerouslySetInnerHTML={{__html: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}} />
+                <div id="middlediv"
+                     dangerouslySetInnerHTML={{__html: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}}/>
                 <div className="select">
                     <Select
                         value={selectedOption2}
@@ -163,10 +175,12 @@ class App extends React.Component {
                         columns={columns}
                         defaultPageSize={100}
                         minRows={3}
+                        showPagination={false}
                     />
                 </div>
             </div>
         );
     }
 }
+
 export default App;

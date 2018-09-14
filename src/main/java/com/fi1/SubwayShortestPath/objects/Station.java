@@ -38,4 +38,13 @@ public class Station {
     public void setLineNum(int lineNum) {
         this.lineNum = lineNum;
     }
+
+    @Override
+    public String toString() {
+        return "Station{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lineNum=" + lineNum +
+                '}';
+    }
 }
